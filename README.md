@@ -11,7 +11,7 @@ Este projeto cria um ambiente de laboratorio do [k3s](https://k3s.io) com um Mas
 > Caso deseje alterar a quantidade de CPU/Memoria de cada maquina altere o arquivo config.yaml
 
 ## Requisitos
-[Instale o Vagrant](https://www.vagrantup.com/docs/installation) na sua estacao de trabalho.
+[Instale o Vagrant (>= 2.2.19)](https://www.vagrantup.com/docs/installation) e o [VirtualBox (>= 6.1)](https://www.virtualbox.org) na sua estacao de trabalho.  
 ## Utilizacao
 Para inicializar o ambiente, digite os comandos a seguir:
 ```shell
@@ -22,19 +22,24 @@ vagrant up
 
 Apos o Vagrant terminar de inicializar e configurar as maquinas, verifique a saude do cluster.
 ```shell
-vagrant ssh master-1
-sudo su
-k3s kubectl get nodes
+vagrant ssh -c 'sudo k3s kubectl get nodes' master-1
 ```
 
 >Resultado esperado:
 >```shell
 >NAME               STATUS   ROLES                  AGE     VERSION
->vagrant-worker-1   Ready    <none>                 5m19s   v1.23.6+k3s1
->vagrant-master-1   Ready    control-plane,master   9m48s   v1.23.6+k3s1
->vagrant-worker-2   Ready    <none>                 14s     v1.23.6+k3s1
+>worker-1   Ready    <none>                 5m19s   v1.23.6+k3s1
+>master-1   Ready    control-plane,master   9m48s   v1.23.6+k3s1
+>worker-2   Ready    <none>                 14s     v1.23.6+k3s1
 >```
 
+A partir deste ponto voce pode estabelecer uma conexao ssh com qualquer uma das 3 maquinas criadas com o comando `vagrant ssh <nome_da_maquina>`. Exemplo:
+
+```shell
+vagrant ssh master-1
+```
+
+> Voce sera conectado com o usuario vagrant e pode virar root com o comando `sudo su`.
 ## Comandos basicos  do vagrant
 > Atenção: Os comandos devem ser executados no diretorio que contem o Vagrantfile.
 
